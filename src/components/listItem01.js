@@ -15,17 +15,12 @@ export const ListItem01 = (props) => {
                 </li>
                 <li className="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
                     <div className="d-flex flex-row justify-content-end mb-1">
-                        {/* <a href="#!" className="text-info" data-mdb-toggle="tooltip" title="Edit todo"><i
-                            className="fas fa-pencil-alt me-3"></i></a> */}
-
-                        <button className="d-flex mt-1 flex-row justify-content-end mb-1" style={{ border: "none", color: "red" }}><i
+                        <input onChange={props.editInputOnchangeHandler} id="input edit" style={{ display: props.editInputDisplay }} />
+                        <button data-mdb-toggle="tooltip" title="Edit todo" onClick={props.editButtonClick} id="edit button" className="d-flex mt-1 flex-row justify-content-end mb-1" style={{ border: "none", color: "red" }}><i
                             className="fas fa-pencil-alt"></i></button>
 
-                        <button className="d-flex mt-1 flex-row justify-content-end mb-1" style={{ border: "none" }}><i
+                        <button data-mdb-toggle="tooltip" title="Delete" onClick={props.deleteButtonClick} id="delete button" className="d-flex mt-1 flex-row justify-content-end mb-1" style={{ border: "none" }}><i
                             className="fas fa-trash-alt"></i></button>
-                        {/* 
-                        <a href="#!" className="text-danger" data-mdb-toggle="tooltip" title="Delete todo"><i
-                            className="fas fa-trash-alt"></i></a> */}
                     </div>
                     <div className="text-end text-muted">
                         <a href="#!" className="text-muted" data-mdb-toggle="tooltip" title="Created date">

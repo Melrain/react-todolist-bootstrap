@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Filter } from './components/filter';
 import { Frame } from './components/frame';
@@ -18,12 +18,14 @@ function App() {
 
   const [newValue, setNewValue] = useState("");
 
-  const renderFunction = ListData.map((item, key) => {
-    return <ListItem01 key={item.id} content={item.listContent} />
-  })
+  const [display, setDisplay] = useState("none");
+
+  const [editValue, setEditValue] = useState("");
 
   const handlerOnchange = (event) => {
-    setNewValue(event.target.value);
+    const { value, id } = event.target;
+    setNewValue(value);
+    event.preventDefault();
   }
 
   const handleOnClicke = () => {
@@ -37,14 +39,54 @@ function App() {
 
   }
 
+  const handleEditButtonOnClicke = (event) => {
+
+    console.log("edit button clicked");
+    setDisplay(display == "none" ? "" : "none");
+
+  }
+
+  //从state array 中删除item
+  const handleDeleteButtonOnClick = (data) => {
+    console.log("delete button clicked");
+    setData((prevValue) => {
+      return prevValue.filter((item) => item !== data)
+    })
+  }
+
+  //重新编辑文本
+  const handleEditInput = (event) => {
+    const { value } = event.target;
+    setEditValue(value);
+  }
+
+  //监听键盘
+  useEffect(() => {
+    document.addEventListener("keydown", detectKeyDown, true)
+  }, []);
+
+  const detectKeyDown = (event) => {
+    console.log("Clicked key:" + event.key);
+
+    if (event.key === " ") {
+      console.log("key clicked: SpaceBar");
+    }
+  }
+
+
+
+  const renderFunction = ListData.map((item, key) => {
+    return <ListItem01 editInputOnchangeHandler={handleEditInput} editButtonClick={handleEditButtonOnClicke} deleteButtonClick={() => { handleDeleteButtonOnClick(item) }} key={item.id} content={item.listContent} editInputDisplay={display} />
+  }
+  )
+
+  //渲染
   return (
     <div>
       <Frame
         input={<Input onChangeHandler={handlerOnchange} onClickHandle={handleOnClicke} />}
         filter={<Filter />}
         renderListFunction={renderFunction}
-        listItem02={<ListItem02 />}
-        listItem03={<ListItem03 />}
       />
 
     </div>
